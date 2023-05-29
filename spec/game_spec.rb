@@ -39,4 +39,10 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#select_word' do
+    it 'returns a random word from the dictionary' do
+      expect(game.dictionary).to include(game.select_word)
+    end
+  end
 end

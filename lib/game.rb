@@ -14,4 +14,8 @@ class Game
     puts "Error while reading file #{text_file}"
     puts e
   end
+
+  def select_word
+    return 'home'
+  end
 end
