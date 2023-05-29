@@ -6,7 +6,8 @@ RSpec.describe Game do
   describe '#load_dictionary' do
     context 'when the dictionary is loaded successfully from the text file' do
       it 'returns true' do
-        expect(game.load_dictionary).to eq(true)
+        text_file = 'google-10000-english-no-swears'
+        expect(game.load_dictionary(text_file)).to eq(true)
       end
     end
   end
