@@ -36,8 +36,6 @@ class Game
     @guess_word = guess_word.each_with_index.map do |char, index|
       indices.include?(index) ? guess : char
     end
-
-    # @guess_word = %w[_ _ e e _]
   end
 
   def indices_of_letter(guess)
