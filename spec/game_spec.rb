@@ -89,7 +89,7 @@ RSpec.describe Game do
   
   describe '#update_guess_word' do
     before do
-      allow(game).to receive(:guess_word).and_return(%w[_ _ _ _ _])
+      allow(game).to receive(:secret_word).and_return('kneel')
     end
 
     it 'updates @guessword with guessed letter' do

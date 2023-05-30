@@ -33,8 +33,8 @@ class Game
   end
 
   def update_guess_word(guess, indices)
-    @guess_word = guess_word.each_with_index.map do |char, index|
-      indices.include?(index) ? guess : char
+    @guess_word = secret_word.split('').each_with_index.map do |char, index|
+      indices.include?(index) ? guess : '_'
     end
   end
 
