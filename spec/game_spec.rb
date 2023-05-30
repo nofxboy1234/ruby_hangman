@@ -95,7 +95,7 @@ RSpec.describe Game do
     it 'updates @guessword with guessed letter' do
       guess = 'e'
       indices = [2, 3]
-      # binding.pry
+
       expect { game.update_guess_word(guess, indices) }
         .to change { game.instance_variable_get(:@guess_word) }
         .to(%w[_ _ e e _])
@@ -119,4 +119,22 @@ RSpec.describe Game do
       expect { game.decrement_guesses }.to change { game.guesses }.by(-1)
     end
   end
+
+  describe '#update_incorrect_guesses' do
+    it 'appends incorrectly guessed letter to @incorrect_guesses' do
+      guess = 'x'
+
+      expect { game.update_incorrect_guesses(guess) }
+        .to change { game.incorrect_guesses.size }.by(1)
+    end
+  end
+
+  # describe '#guess_word' do
+  #   context 'when there are no correct guesses' do
+  #     it 'returns the ' do
+  
+  #     end
+
+  #   end
+  # end
 end

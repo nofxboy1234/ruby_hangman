@@ -6,11 +6,12 @@ require 'pry-byebug'
 # The Game class represents a game in Hangman
 class Game
   attr_reader :dictionary, :text_file, :guesses, :secret_word, :guess_word,
-    :incorrect_guesses
+              :incorrect_guesses
 
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
     @guesses = 7
+    @incorrect_guesses = []
   end
 
   def load_text_file(text_file)
@@ -34,7 +35,7 @@ class Game
   end
 
   def update_guess_word(guess, indices)
-    @guess_word = secret_word.split('').each_with_index.map do |char, index|
+    @guess_word = secret_word.split('').each_with_index.map do |_char, index|
       indices.include?(index) ? guess : '_'
     end
   end
@@ -48,5 +49,9 @@ class Game
 
   def decrement_guesses
     @guesses -= 1
+  end
+
+  def update_incorrect_guesses(guess)
+    @incorrect_guesses << guess
   end
 end

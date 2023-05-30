@@ -7,7 +7,9 @@ def player_turn(game)
   guess = gets.strip.chomp.downcase
   indices = game.indices_of_letter(guess)
 
-  game.update_guess_word(guess, indices) if game.correct_letter?(guess)
+  game.update_incorrect_guesses(guess) unless game.correct_letter?(guess)
+  game.update_guess_word(guess, indices)
+
   game.decrement_guesses
   puts "You have #{game.guesses} guesses left"
 
