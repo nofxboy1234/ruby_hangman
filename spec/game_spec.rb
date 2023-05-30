@@ -4,6 +4,10 @@ RSpec.describe Game do
   subject(:game) { described_class.new('dictionary.txt') }
   let(:text_file) { 'dictionary2.txt' }
 
+  before do
+    allow(File).to receive(:readlines).and_return(%w[a b c])
+  end
+
   describe '#load_text_file' do
     it 'sets the value of @text_file' do
       expect { game.load_text_file(text_file) }.to change { game.text_file }
@@ -11,9 +15,6 @@ RSpec.describe Game do
   end
   
   describe '#load_dictionary' do
-    before do
-      allow(File).to receive(:readlines).and_return(%w[a b c])
-    end
 
     it 'sets the value of @dictionary' do
       expect { game.load_dictionary }.to change { game.dictionary }
@@ -47,10 +48,11 @@ RSpec.describe Game do
     end
   end
 
+  describe '#select_word' do
+    it 'returns a random word from the dictionary' do
+      game.load_dictionary
 
-  # describe '#select_word' do
-  #   it 'returns a random word from the dictionary' do
-  #     expect(game.dictionary).to include(game.select_word)
-  #   end
-  # end
+      expect(game.dictionary).to include(game.select_word)
+    end
+  end
 end

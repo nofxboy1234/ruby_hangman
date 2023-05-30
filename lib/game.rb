@@ -22,6 +22,6 @@ class Game
   end
 
   def select_word
-    return 'home'
+    dictionary.sample
   end
 end
