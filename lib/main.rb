@@ -6,17 +6,13 @@ game = Game.new
 game.load_dictionary
 game.select_word
 
-puts Array.new(game.secret_word.length, '_')
+p game.secret_word
+p Array.new(game.secret_word.length, '_')
 
 puts 'Enter your guess'
 guess = gets.strip.chomp.downcase
+indices = game.indices_of_letter(guess)
 
-if game.correct_letter?(guess)
-  game.update_guess_word
-end
+game.update_guess_word(guess, indices) if game.correct_letter?(guess)
 
-puts Array.new(game.secret_word.length, '_')
-
-
-
-
+p game.guess_word
