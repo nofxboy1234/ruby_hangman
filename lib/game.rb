@@ -44,4 +44,8 @@ class Game
       index if letter == guess
     end
   end
+
+  def decrement_guesses
+    @guesses -= 1
+  end
 end

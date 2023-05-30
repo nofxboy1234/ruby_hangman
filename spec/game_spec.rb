@@ -86,6 +86,21 @@ RSpec.describe Game do
       end
     end
   end
+  
+  describe '#update_guess_word' do
+    before do
+      allow(game).to receive(:guess_word).and_return(%w[_ _ _ _ _])
+    end
+
+    it 'updates @guessword with guessed letter' do
+      guess = 'e'
+      indices = [2, 3]
+      # binding.pry
+      expect { game.update_guess_word(guess, indices) }
+        .to change { game.instance_variable_get(:@guess_word) }
+        .to(%w[_ _ e e _])
+    end
+  end
 
   describe '#indices_of_letter' do
     before do
@@ -97,20 +112,11 @@ RSpec.describe Game do
 
       expect(game.indices_of_letter(guess)).to eq([2, 3])
     end
-
-    describe '#update_guess_word' do
-      before do
-        allow(game).to receive(:guess_word).and_return(%w[_ _ _ _ _])
-      end
-
-      it 'updates @guessword with guessed letter' do
-        guess = 'e'
-        indices = [2, 3]
-        # binding.pry
-        expect { game.update_guess_word(guess, indices) }
-          .to change { game.instance_variable_get(:@guess_word) }
-          .to(%w[_ _ e e _])
-      end
+  end
+  
+  describe '#decrement_guesses' do
+    it 'decreases @guesses by 1' do
+      expect { game.decrement_guesses }.to change { game.guesses }.by(-1)
     end
   end
 end
