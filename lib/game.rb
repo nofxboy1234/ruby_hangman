@@ -6,10 +6,11 @@ require 'pry-byebug'
 
 # The Game class represents a game in Hangman
 class Game
-  attr_reader :dictionary, :text_file
+  attr_reader :dictionary, :text_file, :guesses
 
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
+    @guesses = 7
   end
 
   def load_text_file(text_file)
