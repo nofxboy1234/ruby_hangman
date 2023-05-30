@@ -8,6 +8,8 @@ def player_turn(game)
   indices = game.indices_of_letter(guess)
 
   game.update_guess_word(guess, indices) if game.correct_letter?(guess)
+  game.decrement_guesses
+  puts "You have #{game.guesses} guesses left"
 
   p game.guess_word
 end

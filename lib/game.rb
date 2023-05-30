@@ -5,7 +5,8 @@ require 'pry-byebug'
 
 # The Game class represents a game in Hangman
 class Game
-  attr_reader :dictionary, :text_file, :guesses, :secret_word, :guess_word
+  attr_reader :dictionary, :text_file, :guesses, :secret_word, :guess_word,
+    :incorrect_guesses
 
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
