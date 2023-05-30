@@ -71,7 +71,7 @@ RSpec.describe Game do
     before do
       allow(game).to receive(:secret_word).and_return('bread')
     end
-    
+
     context 'when letter is a part of the secret word' do
       it 'returns true' do
         guess = 'a'
@@ -87,19 +87,6 @@ RSpec.describe Game do
     end
   end
 
-  # describe '#update_guess_word' do
-  #   before do
-  #     allow(game).to receive(:secret_word).and_return('kneel')
-  #   end
-
-  #   it 'updates @guessword with guessed letter' do
-  #     guess = 'e'
-      
-  #     expect { game.update_guess_word(guess) }.to change { game.guess_word }
-  #       .to(%w[_ _ e e _])
-  #   end
-  # end
-
   describe '#indices_of_letter' do
     before do
       allow(game).to receive(:secret_word).and_return('kneel')
@@ -107,10 +94,23 @@ RSpec.describe Game do
 
     it 'returns the indices of a letter in the secret word' do
       guess = 'e'
-      
+
       expect(game.indices_of_letter(guess)).to eq([2, 3])
     end
-  end
 
-  
+    describe '#update_guess_word' do
+      before do
+        allow(game).to receive(:guess_word).and_return(%w[_ _ _ _ _])
+      end
+
+      it 'updates @guessword with guessed letter' do
+        guess = 'e'
+        indices = [2, 3]
+        # binding.pry
+        expect { game.update_guess_word(guess, indices) }
+          .to change { game.instance_variable_get(:@guess_word) }
+          .to(%w[_ _ e e _])
+      end
+    end
+  end
 end
