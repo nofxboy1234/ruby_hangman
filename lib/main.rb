@@ -11,8 +11,6 @@ def player_turn(game)
     game.update_incorrect_guesses(guess)
     game.decrement_guesses
   end
-  # game.update_incorrect_guesses(guess) unless game.correct_letter?(guess)
-  # game.decrement_guesses unless game.correct_letter?(guess)
 
   game.update_guess_word(guess, indices)
 
@@ -24,8 +22,9 @@ end
 game = Game.new
 game.load_dictionary
 game.select_word
+game.update_guess_word
 
 p game.secret_word
 p Array.new(game.secret_word.length, '_')
 
-player_turn(game)
+player_turn(game) until game.over?

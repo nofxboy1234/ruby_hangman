@@ -34,7 +34,7 @@ class Game
     secret_word.include?(guess)
   end
 
-  def update_guess_word(guess, indices)
+  def update_guess_word(guess = '', indices = [])
     @guess_word = secret_word.split('').each_with_index.map do |_char, index|
       indices.include?(index) ? guess : '_'
     end
