@@ -35,8 +35,6 @@ RSpec.describe Game do
     context 'when rescuing an error' do
       before do
         allow(File).to receive(:readlines).and_raise(Errno::ENOENT)
-        # allow(game).to receive(:puts).twice
-        # allow(game).to receive(:puts).with(Errno::ENOENT)
       end
 
       it 'outputs two error messages' do
