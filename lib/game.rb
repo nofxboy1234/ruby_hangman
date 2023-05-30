@@ -2,6 +2,8 @@
 
 require 'yaml'
 
+require 'pry-byebug'
+
 # The Game class represents a game in Hangman
 class Game
   attr_reader :dictionary, :text_file
@@ -21,7 +23,8 @@ class Game
     puts e
   end
 
-  def select_word
-    dictionary.sample
+  def select_word(min, max)
+    valid_words = dictionary.select { |word| word.length.between?(min, max) }
+    valid_words.sample
   end
 end
