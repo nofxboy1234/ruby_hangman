@@ -51,18 +51,39 @@ RSpec.describe Game do
 
     before do
       game.load_dictionary
+      game.select_word(min, max)
     end
 
-    it 'returns a random word from the dictionary' do
-      expect(game.dictionary).to include(game.select_word(min, max))
+    it 'sets @secret_word to a random word from the dictionary' do
+      expect(game.dictionary).to include(game.secret_word)
     end
 
     matcher :be_between_five_and_twelve do
       match { |actual| actual.between?(5, 12) }
     end
 
-    it 'returns a word between 5 and 12 characters long' do
-      expect(game.select_word(min, max).length).to be_between_five_and_twelve
+    it 'sets @secret_word to a word between 5 and 12 characters long' do
+      expect(game.secret_word.length).to be_between_five_and_twelve
+    end
+  end
+
+  describe '#correct_letter?' do
+    before do
+      allow(game).to receive(:secret_word).and_return('bread')
+    end
+    
+    context 'when letter is a part of the secret word' do
+      it 'returns true' do
+        guess = 'a'
+        expect(game.correct_letter?(guess)).to eq(true)
+      end
+    end
+
+    context 'when letter is not a part of the secret word' do
+      it 'returns false' do
+        guess = 'z'
+        expect(game.correct_letter?(guess)).to eq(false)
+      end
     end
   end
 end

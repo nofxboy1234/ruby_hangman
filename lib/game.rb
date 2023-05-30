@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require 'yaml'
-
 require 'pry-byebug'
 
 # The Game class represents a game in Hangman
 class Game
-  attr_reader :dictionary, :text_file, :guesses
+  attr_reader :dictionary, :text_file, :guesses, :secret_word
 
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
@@ -26,6 +25,10 @@ class Game
 
   def select_word(min = 5, max = 12)
     valid_words = dictionary.select { |word| word.length.between?(min, max) }
-    valid_words.sample
+    @secret_word = valid_words.sample
+  end
+
+  def correct_letter?(guess)
+    secret_word.include?(guess)
   end
 end
