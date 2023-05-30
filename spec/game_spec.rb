@@ -86,4 +86,31 @@ RSpec.describe Game do
       end
     end
   end
+
+  # describe '#update_guess_word' do
+  #   before do
+  #     allow(game).to receive(:secret_word).and_return('kneel')
+  #   end
+
+  #   it 'updates @guessword with guessed letter' do
+  #     guess = 'e'
+      
+  #     expect { game.update_guess_word(guess) }.to change { game.guess_word }
+  #       .to(%w[_ _ e e _])
+  #   end
+  # end
+
+  describe '#indices_of_letter' do
+    before do
+      allow(game).to receive(:secret_word).and_return('kneel')
+    end
+
+    it 'returns the indices of a letter in the secret word' do
+      guess = 'e'
+      
+      expect(game.indices_of_letter(guess)).to eq([2, 3])
+    end
+  end
+
+  
 end
