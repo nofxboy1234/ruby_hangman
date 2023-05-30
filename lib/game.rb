@@ -4,11 +4,17 @@ require 'yaml'
 
 # The Game class represents a game in Hangman
 class Game
-  attr_reader :dictionary
+  attr_reader :dictionary, :text_file
 
-  def initialize; end
+  def initialize(text_file = 'google-10000-english-no-swears.txt')
+    load_text_file(text_file)
+  end
 
-  def load_dictionary(text_file)
+  def load_text_file(text_file)
+    @text_file = text_file
+  end
+
+  def load_dictionary
     @dictionary = File.readlines(text_file, chomp: true)
   rescue StandardError => e
     puts "Error while reading file #{text_file}"
