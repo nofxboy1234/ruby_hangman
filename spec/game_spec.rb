@@ -48,11 +48,14 @@ RSpec.describe Game do
   end
 
   describe '#select_word' do
-    it 'returns a random word from the dictionary' do
-      game.load_dictionary
-      min = 5
-      max = 12
+    let(:min) { 5 }
+    let(:max) { 12 }
 
+    before do
+      game.load_dictionary
+    end
+
+    it 'returns a random word from the dictionary' do
       expect(game.dictionary).to include(game.select_word(min, max))
     end
 
@@ -61,10 +64,6 @@ RSpec.describe Game do
     end
 
     it 'returns a word between 5 and 12 characters long' do
-      game.load_dictionary
-      min = 5
-      max = 12
-
       expect(game.select_word(min, max).length).to be_between_five_and_twelve
     end
   end
