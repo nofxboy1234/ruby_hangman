@@ -54,4 +54,8 @@ class Game
   def update_incorrect_guesses(guess)
     @incorrect_guesses << guess
   end
+
+  def over?
+    guess_word.join == secret_word
+  end
 end
