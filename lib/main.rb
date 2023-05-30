@@ -3,4 +3,5 @@
 require_relative 'game'
 
 game = Game.new
-game.load_dictionary('google-10000-english-no-swears.txt')
+game.load_dictionary
+game.select_word

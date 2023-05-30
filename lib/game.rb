@@ -23,7 +23,7 @@ class Game
     puts e
   end
 
-  def select_word(min, max)
+  def select_word(min = 5, max = 12)
     valid_words = dictionary.select { |word| word.length.between?(min, max) }
     valid_words.sample
   end
