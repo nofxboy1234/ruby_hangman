@@ -32,3 +32,9 @@ game.update_guess_word
 # p Array.new(game.secret_word.length, '_')
 
 player_turn(game) until game.over?
+
+if game.secret_word_guessed?
+  puts 'You guessed the secret word!'
+else
+  puts 'Game over. You ran out of incorrect guesses!'
+end

@@ -63,8 +63,6 @@ class Game
     @correct_guesses << guess
   end
 
-  private
-
   def no_more_guesses_left?
     guesses.zero?
   end
@@ -72,6 +70,8 @@ class Game
   def secret_word_guessed?
     guess_word.join == secret_word
   end
+
+  private
 
   def indices_of_letter(guess)
     secret_word_array = secret_word.split('')
