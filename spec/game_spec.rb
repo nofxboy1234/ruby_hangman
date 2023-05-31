@@ -100,17 +100,7 @@ RSpec.describe Game do
     end
   end
 
-  # describe '#indices_of_letter' do
-  #   before do
-  #     allow(game).to receive(:secret_word).and_return('kneel')
-  #   end
 
-  #   it 'returns the indices of a letter in the secret word' do
-  #     guess = 'e'
-
-  #     expect(game.indices_of_letter(guess)).to eq([2, 3])
-  #   end
-  # end
 
   describe '#decrement_guesses' do
     it 'decreases @guesses by 1' do
@@ -128,11 +118,10 @@ RSpec.describe Game do
   end
 
   describe '#over?' do
-    context 'when player guesses the secret word' do
+    context 'when player guesses the secret word and there are guesses left' do
       before do
+        allow(game).to receive(:secret_word_guessed?).and_return(true)
         allow(game).to receive(:no_more_guesses_left?).and_return(false)
-        allow(game).to receive(:secret_word).and_return('kneel')
-        allow(game).to receive(:guess_word).and_return(%w[k n e e l])
       end
 
       it 'is game over' do
@@ -140,37 +129,14 @@ RSpec.describe Game do
       end
     end
 
-    context 'when player has not guessed the secret word' do
-      before do
-        allow(game).to receive(:no_more_guesses_left?).and_return(false)
-        allow(game).to receive(:secret_word).and_return('kneel')
-        allow(game).to receive(:guess_word).and_return(%w[k n e e _])
-      end
-
-      it 'is not game over' do
-        expect(game).not_to be_over
-      end
-    end
-
-    context 'when the number of guesses left is zero' do
+    context 'when player has not guessed the secret word and there are no guesses left' do
       before do
         allow(game).to receive(:secret_word_guessed?).and_return(false)
-        allow(game).to receive(:guesses).and_return(0)
+        allow(game).to receive(:no_more_guesses_left?).and_return(true)
       end
 
       it 'is game over' do
         expect(game).to be_over
-      end
-    end
-
-    context 'when the number of guesses left is not zero' do
-      before do
-        allow(game).to receive(:secret_word_guessed?).and_return(false)
-        allow(game).to receive(:guesses).and_return(1)
-      end
-
-      it 'is not game over' do
-        expect(game).not_to be_over
       end
     end
   end
@@ -183,4 +149,62 @@ RSpec.describe Game do
         .to change { game.correct_guesses.size }.by(1)
     end
   end
+
+  describe '#no_more_guesses_left?' do
+    context 'when guesses is zero' do
+      before do
+        allow(game).to receive(:guesses).and_return(0)
+      end
+
+      it 'returns true' do
+        expect(game.no_more_guesses_left?).to eq(true)
+      end
+    end
+
+    context 'when guesses is not zero' do
+      before do
+        allow(game).to receive(:guesses).and_return(1)
+      end
+
+      it 'returns false' do
+        expect(game.no_more_guesses_left?).to eq(false)
+      end
+    end
+  end
+
+  describe '#secret_word_guessed?' do
+    context 'when player guesses the secret word' do
+      before do
+        allow(game).to receive(:secret_word).and_return('kneel')
+        allow(game).to receive(:guess_word).and_return(%w[k n e e l])
+      end
+
+      it 'returns true' do
+        expect(game.secret_word_guessed?).to eq(true)
+      end
+    end
+
+    context 'when player has not guessed the secret word' do
+      before do
+        allow(game).to receive(:secret_word).and_return('kneel')
+        allow(game).to receive(:guess_word).and_return(%w[k n e e _])
+      end
+
+      it 'returns false' do
+        expect(game.secret_word_guessed?).to eq(false)
+      end
+    end
+  end
+
+    # describe '#indices_of_letter' do
+  #   before do
+  #     allow(game).to receive(:secret_word).and_return('kneel')
+  #   end
+
+  #   it 'returns the indices of a letter in the secret word' do
+  #     guess = 'e'
+
+  #     expect(game.indices_of_letter(guess)).to eq([2, 3])
+  #   end
+  # end
 end
