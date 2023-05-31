@@ -3,10 +3,9 @@
 require_relative 'game'
 
 def player_turn(game)
-  system "clear"
+  system 'clear'
   p game.secret_word
 
-  # game.update_guess_word
   p game.guess_word
 
   p game.incorrect_guesses
@@ -28,8 +27,6 @@ game = Game.new
 game.load_dictionary
 game.select_word
 game.update_guess_word
-
-# p Array.new(game.secret_word.length, '_')
 
 player_turn(game) until game.over?
 
