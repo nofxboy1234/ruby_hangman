@@ -3,11 +3,14 @@
 require_relative 'game'
 
 def player_turn(game)
+  system "clear"
   p game.secret_word
 
-  game.update_guess_word
+  # game.update_guess_word
   p game.guess_word
 
+  p game.incorrect_guesses
+  puts "You have #{game.guesses} incorrect guesses left"
   puts 'Enter your guess'
   guess = gets.strip.chomp.downcase
 
@@ -18,9 +21,7 @@ def player_turn(game)
     game.decrement_guesses
   end
 
-
-  puts "You have #{game.guesses} guesses left"
-
+  game.update_guess_word
 end
 
 game = Game.new

@@ -144,7 +144,7 @@ RSpec.describe Game do
       before do
         allow(game).to receive(:no_more_guesses_left?).and_return(false)
         allow(game).to receive(:secret_word).and_return('kneel')
-        allow(game).to receive(:guess_word).and_return(%w[k n e e s])
+        allow(game).to receive(:guess_word).and_return(%w[k n e e _])
       end
 
       it 'is not game over' do
