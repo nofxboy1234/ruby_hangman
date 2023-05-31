@@ -130,6 +130,7 @@ RSpec.describe Game do
   describe '#over?' do
     context 'when player guesses the secret word' do
       before do
+        allow(game).to receive(:no_more_guesses_left?).and_return(false)
         allow(game).to receive(:secret_word).and_return('kneel')
         allow(game).to receive(:guess_word).and_return(%w[k n e e l])
       end
@@ -141,6 +142,7 @@ RSpec.describe Game do
 
     context 'when player has not guessed the secret word' do
       before do
+        allow(game).to receive(:no_more_guesses_left?).and_return(false)
         allow(game).to receive(:secret_word).and_return('kneel')
         allow(game).to receive(:guess_word).and_return(%w[k n e e s])
       end
@@ -151,7 +153,25 @@ RSpec.describe Game do
     end
 
     context 'when the number of guesses left is zero' do
-      it 'is game over'
+      before do
+        allow(game).to receive(:secret_word_guessed?).and_return(false)
+        allow(game).to receive(:guesses).and_return(0)
+      end
+
+      it 'is game over' do
+        expect(game).to be_over
+      end
+    end
+
+    context 'when the number of guesses left is not zero' do
+      before do
+        allow(game).to receive(:secret_word_guessed?).and_return(false)
+        allow(game).to receive(:guesses).and_return(1)
+      end
+
+      it 'is not game over' do
+        expect(game).not_to be_over
+      end
     end
   end
 

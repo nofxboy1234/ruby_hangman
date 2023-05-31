@@ -56,7 +56,7 @@ class Game
   end
 
   def over?
-    guess_word.join == secret_word
+    secret_word_guessed? || no_more_guesses_left?
   end
 
   def update_correct_guesses(guess)
@@ -64,6 +64,14 @@ class Game
   end
 
   private
+
+  def no_more_guesses_left?
+    guesses.zero?
+  end
+
+  def secret_word_guessed?
+    guess_word.join == secret_word
+  end
 
   def indices_of_letter(guess)
     secret_word_array = secret_word.split('')
