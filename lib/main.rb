@@ -6,17 +6,12 @@ require 'pry-byebug'
 
 def display_info(game)
   system 'clear'
-  p game.secret_word
   p game.guess_word
   puts "incorrect guesses: #{game.incorrect_guesses}"  
 end
 
 def player_turn(game)
   display_info(game)
-  # system 'clear'
-  # p game.secret_word
-  # p game.guess_word
-  # puts "incorrect guesses: #{game.incorrect_guesses}"
 
   puts "You have #{game.guesses} incorrect guesses left"
   puts 'Enter your guess'
@@ -34,7 +29,6 @@ end
 
 def game_loop
   loop do
-    # binding.pry
     game = Game.new
     game.load_dictionary
     game.select_word
@@ -42,6 +36,8 @@ def game_loop
     
     player_turn(game) until game.over?
     display_info(game)
+    puts "The secret word was '#{game.secret_word}'"
+
 
     if game.secret_word_guessed?
       puts 'You guessed the secret word!'
@@ -56,5 +52,3 @@ def game_loop
 end
 
 game_loop
-# binding.pry
-puts 'end'
