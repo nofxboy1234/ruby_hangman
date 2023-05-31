@@ -36,8 +36,8 @@ class Game
   end
 
   def update_guess_word
-    # guess_indices = {}
     updated_guess_word = Array.new(secret_word.length, '_')
+    
     all_correct_guess_indices.each_pair do |guess, indices|
       indices.each do |index|
         updated_guess_word[index] = guess
@@ -46,12 +46,6 @@ class Game
 
     @guess_word = updated_guess_word
   end
-
-  # def update_guess_word(guess = '', indices = [])
-  #   @guess_word = secret_word.split('').each_with_index.map do |_char, index|
-  #     indices.include?(index) ? guess : '_'
-  #   end
-  # end
 
   def decrement_guesses
     @guesses -= 1
@@ -79,11 +73,6 @@ class Game
   end
 
   def all_correct_guess_indices
-    # correct_guesses.inject({}) do |guess_indices, guess|
-    #   guess_indices[guess] = indices_of_letter(guess)
-    #   guess_indices
-    # end
-
     correct_guesses.map { |guess| [guess, indices_of_letter(guess)] }.to_h
   end
 end
