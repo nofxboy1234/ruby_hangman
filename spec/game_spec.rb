@@ -85,6 +85,13 @@ RSpec.describe Game do
         expect(game.correct_letter?(guess)).to eq(false)
       end
     end
+
+    context 'when input is consecutive letters that are a part of the secret word' do
+      it 'returns false' do
+        guess = 'br'
+        expect(game.correct_letter?(guess)).to eq(false)
+      end
+    end
   end
 
   describe '#update_guess_word' do

@@ -32,7 +32,7 @@ class Game
   end
 
   def correct_letter?(guess)
-    secret_word.include?(guess)
+    secret_word.split('').include?(guess)
   end
 
   def update_guess_word
