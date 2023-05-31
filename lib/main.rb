@@ -5,14 +5,16 @@ require_relative 'game'
 def player_turn(game)
   puts 'Enter your guess'
   guess = gets.strip.chomp.downcase
-  indices = game.indices_of_letter(guess)
+  # indices = game.indices_of_letter(guess)
 
-  unless game.correct_letter?(guess)
+  if game.correct_letter?(guess)
+    game.update_correct_guesses(guess)
+  else
     game.update_incorrect_guesses(guess)
     game.decrement_guesses
   end
 
-  game.update_guess_word(guess, indices)
+  game.update_guess_word
 
   puts "You have #{game.guesses} guesses left"
 

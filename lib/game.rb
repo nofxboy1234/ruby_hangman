@@ -6,12 +6,13 @@ require 'pry-byebug'
 # The Game class represents a game in Hangman
 class Game
   attr_reader :dictionary, :text_file, :guesses, :secret_word, :guess_word,
-              :incorrect_guesses
+              :incorrect_guesses, :correct_guesses
 
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
     @guesses = 7
     @incorrect_guesses = []
+    @correct_guesses = []
   end
 
   def load_text_file(text_file)
@@ -34,18 +35,23 @@ class Game
     secret_word.include?(guess)
   end
 
-  def update_guess_word(guess = '', indices = [])
-    @guess_word = secret_word.split('').each_with_index.map do |_char, index|
-      indices.include?(index) ? guess : '_'
+  def update_guess_word
+    # guess_indices = {}
+    updated_guess_word = Array.new(secret_word.length, '_')
+    all_correct_guess_indices.each_pair do |guess, indices|
+      indices.each do |index|
+        updated_guess_word[index] = guess
+      end
     end
+
+    @guess_word = updated_guess_word
   end
 
-  def indices_of_letter(guess)
-    secret_word_array = secret_word.split('')
-    secret_word_array.each_with_index.filter_map do |letter, index|
-      index if letter == guess
-    end
-  end
+  # def update_guess_word(guess = '', indices = [])
+  #   @guess_word = secret_word.split('').each_with_index.map do |_char, index|
+  #     indices.include?(index) ? guess : '_'
+  #   end
+  # end
 
   def decrement_guesses
     @guesses -= 1
@@ -57,5 +63,27 @@ class Game
 
   def over?
     guess_word.join == secret_word
+  end
+
+  def update_correct_guesses(guess)
+    @correct_guesses << guess
+  end
+
+  private
+
+  def indices_of_letter(guess)
+    secret_word_array = secret_word.split('')
+    secret_word_array.each_with_index.filter_map do |letter, index|
+      index if letter == guess
+    end
+  end
+
+  def all_correct_guess_indices
+    # correct_guesses.inject({}) do |guess_indices, guess|
+    #   guess_indices[guess] = indices_of_letter(guess)
+    #   guess_indices
+    # end
+
+    correct_guesses.map { |guess| [guess, indices_of_letter(guess)] }.to_h
   end
 end
