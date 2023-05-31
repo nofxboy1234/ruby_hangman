@@ -14,7 +14,7 @@ def player_turn(game)
   display_info(game)
 
   puts "You have #{game.guesses} incorrect guesses left"
-  puts 'Enter your guess'
+  puts 'Enter your guess (a single letter)'
   guess = gets.strip.chomp.downcase
 
   if game.correct_letter?(guess)
