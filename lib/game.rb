@@ -36,7 +36,7 @@ class Game
 
   def update_guess_word
     updated_guess_word = Array.new(secret_word.length, '_')
-    
+
     all_correct_guess_indices.each_pair do |guess, indices|
       indices.each do |index|
         updated_guess_word[index] = guess
