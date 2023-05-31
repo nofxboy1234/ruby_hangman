@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'pry-byebug'
 
 # The Game class represents a game in Hangman
 class Game
