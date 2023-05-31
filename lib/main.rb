@@ -8,7 +8,7 @@ def player_turn(game)
 
   p game.guess_word
 
-  p game.incorrect_guesses
+  puts "incorrect guesses: #{game.incorrect_guesses}"
   puts "You have #{game.guesses} incorrect guesses left"
   puts 'Enter your guess'
   guess = gets.strip.chomp.downcase
