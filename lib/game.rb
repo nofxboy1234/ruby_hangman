@@ -4,7 +4,6 @@ require_relative 'display'
 require_relative 'dictionary'
 require 'yaml'
 
-
 # The Game class represents a game in Hangman
 class Game
   include Display
@@ -13,7 +12,6 @@ class Game
   def initialize(dictionary)
     @guesses = 7
     @incorrect_guesses = []
-    @correct_guesses = []
     @dictionary = dictionary
   end
 

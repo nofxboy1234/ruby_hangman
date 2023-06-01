@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# The Dictionary class is responsible for loading a text file and its words
 class Dictionary
   attr_reader :text_file, :words
 

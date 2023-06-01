@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The Display module stores methods that print to screen
 module Display
   def end_message
