@@ -9,9 +9,14 @@ def prompt_for_play_again
   gets.strip.chomp.downcase
 end
 
+def dictionary
+  text_file = 'google-10000-english-no-swears.txt'
+  Dictionary.new(text_file)
+end
+
 def game_loop
   loop do
-    game = Game.new
+    game = Game.new(dictionary)
     game.play
 
     play_again = prompt_for_play_again

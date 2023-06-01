@@ -1,39 +1,28 @@
 # frozen_string_literal: true
 
 require_relative 'display'
+require_relative 'dictionary'
 require 'yaml'
+
 
 # The Game class represents a game in Hangman
 class Game
   include Display
-  attr_reader :dictionary, :text_file, :guesses, :secret_word,
-              :incorrect_guesses
+  attr_reader :dictionary, :guesses, :secret_word, :incorrect_guesses
 
-  def initialize(text_file = 'google-10000-english-no-swears.txt')
-    load_text_file(text_file)
+  def initialize(dictionary)
     @guesses = 7
     @incorrect_guesses = []
     @correct_guesses = []
+    @dictionary = dictionary
   end
 
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
   end
 
-  def load_text_file(text_file)
-    @text_file = text_file
-  end
-
-  def load_dictionary
-    @dictionary = File.readlines(text_file, chomp: true)
-  rescue StandardError => e
-    puts "Error while reading file #{text_file}"
-    puts e
-  end
-
-  def select_word(min = 5, max = 12)
-    valid_words = dictionary.select { |word| word.length.between?(min, max) }
-    @secret_word = valid_words.sample
+  def select_word
+    @secret_word = dictionary.valid_words.sample
   end
 
   def correct_letter?(guess)
@@ -89,7 +78,7 @@ class Game
   end
 
   def set_up
-    load_dictionary
+    dictionary.load_text_file
     select_word
   end
 

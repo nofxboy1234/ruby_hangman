@@ -1,3 +1,4 @@
+# The Display module stores methods that print to screen
 module Display
   def end_message
     if secret_word_guessed?
