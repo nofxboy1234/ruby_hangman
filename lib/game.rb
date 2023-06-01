@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'display'
 require 'yaml'
 
 # The Game class represents a game in Hangman
 class Game
+  include Display
   attr_reader :dictionary, :text_file, :guesses, :secret_word,
               :incorrect_guesses
 
@@ -67,13 +69,6 @@ class Game
     guess_word.join == secret_word
   end
 
-  def display_info
-    system 'clear'
-    p secret_word
-    p guess_word
-    puts "incorrect guesses: #{incorrect_guesses}"
-  end
-
   def update_state(guess)
     if correct_letter?(guess)
       update_guess_word(guess)
@@ -85,25 +80,17 @@ class Game
 
   def player_turn
     display_info
-  
+
     puts "\nYou have #{guesses} incorrect guesses left"
     puts 'Enter your guess (a single letter)'
     guess = gets.strip.chomp.downcase
-  
+
     update_state(guess)
   end
 
   def set_up
     load_dictionary
     select_word
-  end
-
-  def end_message
-    if secret_word_guessed?
-      puts 'You guessed the secret word!'
-    else
-      puts 'Game over. You ran out of incorrect guesses!'
-    end
   end
 
   def play
