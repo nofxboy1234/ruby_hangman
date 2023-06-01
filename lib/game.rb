@@ -97,4 +97,20 @@ class Game
     load_dictionary
     select_word
   end
+
+  def end_message
+    if secret_word_guessed?
+      puts 'You guessed the secret word!'
+    else
+      puts 'Game over. You ran out of incorrect guesses!'
+    end
+  end
+
+  def play
+    set_up
+    player_turn until over?
+    display_info
+    puts "\nThe secret word was '#{secret_word}'"
+    end_message
+  end
 end

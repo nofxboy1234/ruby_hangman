@@ -7,18 +7,7 @@ require 'pry-byebug'
 def game_loop
   loop do
     game = Game.new
-    game.set_up
-
-    game.player_turn until game.over?
-    
-    game.display_info
-    puts "\nThe secret word was '#{game.secret_word}'"
-
-    if game.secret_word_guessed?
-      puts 'You guessed the secret word!'
-    else
-      puts 'Game over. You ran out of incorrect guesses!'
-    end
+    game.play
 
     puts 'Play again? (y = yes / any other character = no)'
     play_again = gets.strip.chomp.downcase
