@@ -4,15 +4,8 @@ require_relative 'game'
 
 require 'pry-byebug'
 
-def display_info(game)
-  system 'clear'
-  p game.secret_word
-  p game.guess_word
-  puts "incorrect guesses: #{game.incorrect_guesses}"
-end
-
 def player_turn(game)
-  display_info(game)
+  game.display_info
 
   puts "\nYou have #{game.guesses} incorrect guesses left"
   puts 'Enter your guess (a single letter)'
@@ -33,7 +26,7 @@ def game_loop
     game.select_word
 
     player_turn(game) until game.over?
-    display_info(game)
+    game.display_info
     puts "\nThe secret word was '#{game.secret_word}'"
 
     if game.secret_word_guessed?

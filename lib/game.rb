@@ -66,4 +66,11 @@ class Game
   def secret_word_guessed?
     guess_word.join == secret_word
   end
+
+  def display_info
+    system 'clear'
+    p secret_word
+    p guess_word
+    puts "incorrect guesses: #{incorrect_guesses}"
+  end
 end
