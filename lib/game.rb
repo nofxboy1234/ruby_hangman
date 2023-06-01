@@ -6,13 +6,14 @@ require 'yaml'
 class Game
   attr_reader :dictionary, :text_file, :guesses, :secret_word,
               :incorrect_guesses
+
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
     @guesses = 7
     @incorrect_guesses = []
     @correct_guesses = []
   end
-  
+
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
   end
