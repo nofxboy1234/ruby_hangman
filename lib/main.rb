@@ -9,8 +9,7 @@ require 'pry-byebug'
 def game_loop
   loop do
     game = Game.new
-    game.load_dictionary
-    game.select_word
+    game.play
 
     game.player_turn until game.over?
     game.display_info

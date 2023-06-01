@@ -88,4 +88,9 @@ class Game
       decrement_guesses
     end
   end
+
+  def play
+    load_dictionary
+    select_word
+  end
 end
