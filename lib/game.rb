@@ -74,6 +74,15 @@ class Game
     puts "incorrect guesses: #{incorrect_guesses}"
   end
 
+  def update_state(guess)
+    if correct_letter?(guess)
+      update_guess_word(guess)
+    else
+      update_incorrect_guesses(guess)
+      decrement_guesses
+    end
+  end
+
   def player_turn
     display_info
   
@@ -81,12 +90,7 @@ class Game
     puts 'Enter your guess (a single letter)'
     guess = gets.strip.chomp.downcase
   
-    if correct_letter?(guess)
-      update_guess_word(guess)
-    else
-      update_incorrect_guesses(guess)
-      decrement_guesses
-    end
+    update_state(guess)
   end
 
   def set_up

@@ -10,6 +10,7 @@ def game_loop
     game.set_up
 
     game.player_turn until game.over?
+    
     game.display_info
     puts "\nThe secret word was '#{game.secret_word}'"
 
