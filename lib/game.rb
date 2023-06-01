@@ -39,7 +39,11 @@ class Game
   end
 
   def update_guess_word(guess)
-    indices = indices_of_letter_in_secret_word(guess)
+    secret_word_array = secret_word.split('')
+    indices = secret_word_array.each_with_index.filter_map do |letter, index|
+      index if letter == guess
+    end
+
     indices.each { |index| guess_word[index] = guess }
   end
 
@@ -61,14 +65,5 @@ class Game
 
   def secret_word_guessed?
     guess_word.join == secret_word
-  end
-
-  private
-
-  def indices_of_letter_in_secret_word(guess)
-    secret_word_array = secret_word.split('')
-    secret_word_array.each_with_index.filter_map do |letter, index|
-      index if letter == guess
-    end
   end
 end
