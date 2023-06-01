@@ -4,14 +4,17 @@ require 'yaml'
 
 # The Game class represents a game in Hangman
 class Game
-  attr_reader :dictionary, :text_file, :guesses, :secret_word, :guess_word,
-              :incorrect_guesses, :correct_guesses
-
+  attr_reader :dictionary, :text_file, :guesses, :secret_word,
+              :incorrect_guesses
   def initialize(text_file = 'google-10000-english-no-swears.txt')
     load_text_file(text_file)
     @guesses = 7
     @incorrect_guesses = []
     @correct_guesses = []
+  end
+  
+  def guess_word
+    @guess_word ||= Array.new(secret_word.length, '_')
   end
 
   def load_text_file(text_file)
@@ -34,16 +37,9 @@ class Game
     secret_word.split('').include?(guess)
   end
 
-  def update_guess_word
-    updated_guess_word = Array.new(secret_word.length, '_')
-
-    all_correct_guess_indices.each_pair do |guess, indices|
-      indices.each do |index|
-        updated_guess_word[index] = guess
-      end
-    end
-
-    @guess_word = updated_guess_word
+  def update_guess_word(guess)
+    indices = indices_of_letter_in_secret_word(guess)
+    indices.each { |index| guess_word[index] = guess }
   end
 
   def decrement_guesses
@@ -58,10 +54,6 @@ class Game
     secret_word_guessed? || no_more_guesses_left?
   end
 
-  def update_correct_guesses(guess)
-    @correct_guesses << guess
-  end
-
   def no_more_guesses_left?
     guesses.zero?
   end
@@ -72,14 +64,10 @@ class Game
 
   private
 
-  def indices_of_letter(guess)
+  def indices_of_letter_in_secret_word(guess)
     secret_word_array = secret_word.split('')
     secret_word_array.each_with_index.filter_map do |letter, index|
       index if letter == guess
     end
-  end
-
-  def all_correct_guess_indices
-    correct_guesses.map { |guess| [guess, indices_of_letter(guess)] }.to_h
   end
 end

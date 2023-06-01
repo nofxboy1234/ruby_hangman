@@ -97,17 +97,15 @@ RSpec.describe Game do
   describe '#update_guess_word' do
     before do
       allow(game).to receive(:secret_word).and_return('kneel')
-      game.update_correct_guesses('e')
     end
 
     it 'updates @guessword with correctly guessed letters' do
-      expect { game.update_guess_word }
+      guess = 'e'
+      expect { game.update_guess_word(guess) }
         .to change { game.instance_variable_get(:@guess_word) }
         .to(%w[_ _ e e _])
     end
   end
-
-
 
   describe '#decrement_guesses' do
     it 'decreases @guesses by 1' do
@@ -145,15 +143,6 @@ RSpec.describe Game do
       it 'is game over' do
         expect(game).to be_over
       end
-    end
-  end
-
-  describe '#update_correct_guesses' do
-    it 'appends correctly guessed letter to @correct_guesses' do
-      guess = 'x'
-
-      expect { game.update_correct_guesses(guess) }
-        .to change { game.correct_guesses.size }.by(1)
     end
   end
 
@@ -202,16 +191,4 @@ RSpec.describe Game do
       end
     end
   end
-
-    # describe '#indices_of_letter' do
-  #   before do
-  #     allow(game).to receive(:secret_word).and_return('kneel')
-  #   end
-
-  #   it 'returns the indices of a letter in the secret word' do
-  #     guess = 'e'
-
-  #     expect(game.indices_of_letter(guess)).to eq([2, 3])
-  #   end
-  # end
 end

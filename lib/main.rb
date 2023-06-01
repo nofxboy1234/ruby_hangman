@@ -6,6 +6,7 @@ require 'pry-byebug'
 
 def display_info(game)
   system 'clear'
+  p game.secret_word
   p game.guess_word
   puts "incorrect guesses: #{game.incorrect_guesses}"
 end
@@ -13,18 +14,16 @@ end
 def player_turn(game)
   display_info(game)
 
-  puts "You have #{game.guesses} incorrect guesses left"
+  puts "\nYou have #{game.guesses} incorrect guesses left"
   puts 'Enter your guess (a single letter)'
   guess = gets.strip.chomp.downcase
 
   if game.correct_letter?(guess)
-    game.update_correct_guesses(guess)
+    game.update_guess_word(guess)
   else
     game.update_incorrect_guesses(guess)
     game.decrement_guesses
   end
-
-  game.update_guess_word
 end
 
 def game_loop
@@ -32,11 +31,10 @@ def game_loop
     game = Game.new
     game.load_dictionary
     game.select_word
-    game.update_guess_word
 
     player_turn(game) until game.over?
     display_info(game)
-    puts "The secret word was '#{game.secret_word}'"
+    puts "\nThe secret word was '#{game.secret_word}'"
 
     if game.secret_word_guessed?
       puts 'You guessed the secret word!'
