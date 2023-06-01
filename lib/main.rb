@@ -4,12 +4,10 @@ require_relative 'game'
 
 require 'pry-byebug'
 
-
-
 def game_loop
   loop do
     game = Game.new
-    game.play
+    game.set_up
 
     game.player_turn until game.over?
     game.display_info

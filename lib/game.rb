@@ -89,7 +89,7 @@ class Game
     end
   end
 
-  def play
+  def set_up
     load_dictionary
     select_word
   end
