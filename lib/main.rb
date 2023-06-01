@@ -4,20 +4,7 @@ require_relative 'game'
 
 require 'pry-byebug'
 
-def player_turn(game)
-  game.display_info
 
-  puts "\nYou have #{game.guesses} incorrect guesses left"
-  puts 'Enter your guess (a single letter)'
-  guess = gets.strip.chomp.downcase
-
-  if game.correct_letter?(guess)
-    game.update_guess_word(guess)
-  else
-    game.update_incorrect_guesses(guess)
-    game.decrement_guesses
-  end
-end
 
 def game_loop
   loop do
@@ -25,7 +12,7 @@ def game_loop
     game.load_dictionary
     game.select_word
 
-    player_turn(game) until game.over?
+    game.player_turn until game.over?
     game.display_info
     puts "\nThe secret word was '#{game.secret_word}'"
 
