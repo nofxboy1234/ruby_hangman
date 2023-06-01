@@ -4,13 +4,17 @@ require_relative 'game'
 
 require 'pry-byebug'
 
+def prompt_for_play_again
+  puts 'Play again? (y = yes / any other character = no)'
+  gets.strip.chomp.downcase
+end
+
 def game_loop
   loop do
     game = Game.new
     game.play
 
-    puts 'Play again? (y = yes / any other character = no)'
-    play_again = gets.strip.chomp.downcase
+    play_again = prompt_for_play_again
     break unless play_again == 'y'
   end
 end
