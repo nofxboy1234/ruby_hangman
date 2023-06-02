@@ -106,7 +106,7 @@ RSpec.describe Game do
         allow(game_normal).to receive(:incorrect_guesses).and_return(['z'])
 
         expect { game_normal.player_turn }.to change { game_normal.incorrect_guesses }
-          .from(['z']).to(['z', 'x'])
+          .from(['z']).to(%w[z x])
       end
 
       it 'updates @guess_count' do
@@ -125,6 +125,24 @@ RSpec.describe Game do
       it 'decrements @guess_count by one' do
         expect { game_normal.player_turn }.to change { game_normal.guess_count }.by(-1)
       end
+    end
+  end
+
+  describe '#set_up' do
+    let(:valid_words_array) { double('valid_words_array', sample: 'kitten') }
+
+    it 'sends load_text_file message to dictionary' do
+      allow(game_normal).to receive(:select_word)
+
+      expect(dictionary_google).to receive(:load_text_file)
+      game_normal.set_up
+    end
+
+    it 'updates @secret_word' do
+      allow(dictionary_google).to receive(:load_text_file)
+      allow(dictionary_google).to receive(:valid_words).and_return(valid_words_array)
+
+      expect { game_normal.set_up }.to change { game_normal.secret_word }.to('kitten')
     end
   end
 end
