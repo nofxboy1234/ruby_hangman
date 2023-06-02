@@ -4,13 +4,15 @@ require_relative 'display'
 require_relative 'dictionary'
 require 'yaml'
 
+require 'pry-byebug'
+
 # The Game class represents a game in Hangman
 class Game
   include Display
-  attr_reader :dictionary, :guesses, :secret_word, :incorrect_guesses
+  attr_reader :dictionary, :secret_word, :incorrect_guesses, :guess_count
 
   def initialize(dictionary)
-    @guesses = 7
+    @guess_count = 7
     @incorrect_guesses = []
     @dictionary = dictionary
   end
@@ -22,7 +24,7 @@ class Game
   def player_turn
     display_info
 
-    puts "\nYou have #{guesses} incorrect guesses left"
+    puts "\nYou have #{guess_count} incorrect guesses left"
     puts 'Enter your guess (a single letter)'
     guess = gets.strip.chomp.downcase
 
@@ -42,11 +44,11 @@ class Game
     end_message
   end
 
-  private
-
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
   end
+
+  private
 
   def update_state(guess)
     if correct_letter?(guess)
@@ -62,15 +64,16 @@ class Game
   end
 
   def no_more_guesses_left?
-    guesses.zero?
+    guess_count.zero?
   end
 
   def update_incorrect_guesses(guess)
-    @incorrect_guesses << guess
+    incorrect_guesses << guess
   end
-
+  
   def decrement_guesses
-    @guesses -= 1
+    # binding.pry
+    @guess_count -= 1
   end
 
   def update_guess_word(guess)
@@ -78,7 +81,6 @@ class Game
     indices = secret_word_array.each_with_index.filter_map do |letter, index|
       index if letter == guess
     end
-
     indices.each { |index| guess_word[index] = guess }
   end
 
