@@ -109,17 +109,21 @@ RSpec.describe Game do
           .from(['z']).to(['z', 'x'])
       end
 
-      it 'updates @guesses' do
+      it 'updates @guess_count' do
         expect { game_normal.player_turn }.to change { game_normal.guess_count }
           .from(7).to(6)
       end
 
-      it 'updates @guesses' do
+      it 'updates @guess_count' do
         game_normal.player_turn
         game_normal.player_turn
 
         expect { game_normal.player_turn }.to change { game_normal.guess_count }
           .from(5).to(4)
+      end
+
+      it 'decrements @guess_count by one' do
+        expect { game_normal.player_turn }.to change { game_normal.guess_count }.by(-1)
       end
     end
   end

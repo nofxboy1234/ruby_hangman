@@ -72,7 +72,6 @@ class Game
   end
   
   def decrement_guesses
-    # binding.pry
     @guess_count -= 1
   end
 
