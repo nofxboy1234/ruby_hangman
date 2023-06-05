@@ -62,4 +62,26 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#correct_letter?' do
+    before do
+      allow(game_normal).to receive(:secret_word).and_return(secret)
+    end
+
+    context 'when the guessed letter is a letter inside the secret word' do
+      let(:letter) { 'k' }
+
+      it 'returns true' do
+        expect(game_normal.correct_letter?(letter)).to eq(true)
+      end
+    end
+
+    context 'when the guessed letter is a letter not inside the secret word' do
+      let(:letter) { 'z' }
+      
+      it 'returns false' do
+        expect(game_normal.correct_letter?(letter)).to eq(false)
+      end
+    end
+  end
 end
