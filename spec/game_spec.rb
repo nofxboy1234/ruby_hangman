@@ -140,4 +140,12 @@ RSpec.describe Game do
       game_normal.to_yaml
     end
   end
+
+  describe '#write_yaml_to_file' do
+    it 'writes the yaml string to a file' do
+      expect(File).to receive(:open)
+
+      game_normal.write_yaml_to_file
+    end
+  end
 end

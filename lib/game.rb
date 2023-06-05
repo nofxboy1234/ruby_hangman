@@ -69,6 +69,12 @@ class Game
               })
   end
 
+  def write_yaml_to_file
+    File.open('save_file', 'w') do |somefile|
+      somefile.puts(to_yaml)
+    end
+  end
+
   private
 
   def guess_word
