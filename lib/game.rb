@@ -25,7 +25,7 @@ class Game
   def over?
     secret_word_guessed? || no_more_guesses_left?
   end
-  
+
   def update_state(guess)
     if correct_letter?(guess)
       update_guess_word(guess)
@@ -34,11 +34,11 @@ class Game
       decrement_guesses
     end
   end
-  
+
   def select_word
     @secret_word = dictionary.valid_words.sample
   end
-  
+
   private
 
   def guess_word

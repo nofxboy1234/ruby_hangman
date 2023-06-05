@@ -38,9 +38,7 @@ def play
   game.end_message
 end
 
-def game
-  @game
-end
+attr_reader :game
 
 def game_loop
   loop do
