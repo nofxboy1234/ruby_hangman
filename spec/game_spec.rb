@@ -2,7 +2,7 @@ require './lib/game'
 
 RSpec.describe Game do
   subject(:game_normal) { described_class.new(dictionary_google) }
-  let(:dictionary_google) { double('dictionary') }
+  let(:dictionary_google) { double('dictionary', valid_words: ['kittens']) }
   let(:secret) { 'kneel' }
 
   describe '#over?' do
@@ -120,11 +120,17 @@ RSpec.describe Game do
   end
 
   describe '#decrement_guesses' do
-    let(:guess) { 'x' }
-    
     it 'decreases @guess_count by 1' do
       expect { game_normal.decrement_guesses }
         .to change { game_normal.guess_count }.by(-1)
     end
   end
+
+  describe '#select_word' do
+    it 'updates @secret_word' do
+      expect { game_normal.select_word }
+        .to change { game_normal.secret_word }.to('kittens')
+    end
+  end
+
 end
