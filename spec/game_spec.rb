@@ -86,7 +86,6 @@ RSpec.describe Game do
   end
 
   describe '#update_guess_word' do
-    
     context 'when the guessed letter is a letter inside the secret word' do
       let(:letter) { 'n' }
 
