@@ -148,4 +148,14 @@ RSpec.describe Game do
       game_normal.write_yaml_to_file
     end
   end
+
+  describe '.from_yaml' do
+    let(:yaml_string) { 'yaml string' }
+
+    it 'sends load message to YAML' do
+      expect(YAML).to receive(:load)
+
+      Game.from_yaml(yaml_string)
+    end
+  end
 end

@@ -75,6 +75,10 @@ class Game
     end
   end
 
+  def self.from_yaml(yaml_string)
+    YAML.load(yaml_string)
+  end
+
   private
 
   def guess_word
