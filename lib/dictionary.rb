@@ -6,7 +6,6 @@ class Dictionary
 
   def initialize(text_file)
     @text_file = text_file
-    load_text_file
   end
 
   def load_text_file
