@@ -111,11 +111,20 @@ RSpec.describe Game do
 
   describe '#update_incorrect_guesses' do
     let(:guess) { 'x' }
-    
+
     it 'appends a guess to the incorrect_guesses array' do
       expect { game_normal.update_incorrect_guesses(guess) }
         .to change { game_normal.instance_variable_get(:@incorrect_guesses) }
         .to(['x'])
+    end
+  end
+
+  describe '#decrement_guesses' do
+    let(:guess) { 'x' }
+    
+    it 'decreases @guess_count by 1' do
+      expect { game_normal.decrement_guesses }
+        .to change { game_normal.guess_count }.by(-1)
     end
   end
 end
