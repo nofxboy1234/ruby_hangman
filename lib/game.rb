@@ -59,6 +59,26 @@ class Game
     @secret_word = dictionary.valid_words.sample
   end
 
+  def save
+    File.open('save_file', 'w') do |file|
+      file.write(to_yaml)
+    end
+  end
+
+  def self.load
+    YAML.load(read_yaml_from_file)
+  end
+
+  def self.read_yaml_from_file
+    File.open('save_file', 'r') do |file|
+      file.read(to_yaml)
+    end
+  end
+
+  private_class_method :read_yaml_from_file
+
+  private
+
   def to_yaml
     YAML.dump({
                 secret_word: @secret_word,
@@ -68,24 +88,6 @@ class Game
                 guess_word: @guess_word
               })
   end
-
-  def write_yaml_to_file
-    File.open('save_file', 'w') do |file|
-      file.write(to_yaml)
-    end
-  end
-
-  def self.read_yaml_from_file
-    File.open('save_file', 'r') do |file|
-      file.read(to_yaml)
-    end
-  end
-
-  def self.from_yaml(yaml_string)
-    YAML.load(yaml_string)
-  end
-
-  private
 
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
