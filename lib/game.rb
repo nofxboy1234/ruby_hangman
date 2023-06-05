@@ -58,9 +58,9 @@ class Game
   def select_word
     @secret_word = dictionary.valid_words.sample
   end
-  
+
   private
-  
+
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
   end
