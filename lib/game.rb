@@ -59,11 +59,11 @@ class Game
     @secret_word = dictionary.valid_words.sample
   end
   
+  private
+  
   def guess_word
     @guess_word ||= Array.new(secret_word.length, '_')
   end
-
-  private
 
   def secret_word_guessed?
     guess_word.join == secret_word
