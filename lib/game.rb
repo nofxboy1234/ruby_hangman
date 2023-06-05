@@ -35,6 +35,26 @@ class Game
     end
   end
 
+  def correct_letter?(guess)
+    secret_word.split('').include?(guess)
+  end
+
+  def update_guess_word(guess)
+    secret_word_array = secret_word.split('')
+    indices = secret_word_array.each_with_index.filter_map do |letter, index|
+      index if letter == guess
+    end
+    indices.each { |index| guess_word[index] = guess }
+  end
+
+  def update_incorrect_guesses(guess)
+    incorrect_guesses << guess
+  end
+
+  def decrement_guesses
+    @guess_count -= 1
+  end
+
   def select_word
     @secret_word = dictionary.valid_words.sample
   end
@@ -51,25 +71,5 @@ class Game
 
   def no_more_guesses_left?
     guess_count.zero?
-  end
-
-  def update_incorrect_guesses(guess)
-    incorrect_guesses << guess
-  end
-
-  def decrement_guesses
-    @guess_count -= 1
-  end
-
-  def update_guess_word(guess)
-    secret_word_array = secret_word.split('')
-    indices = secret_word_array.each_with_index.filter_map do |letter, index|
-      index if letter == guess
-    end
-    indices.each { |index| guess_word[index] = guess }
-  end
-
-  def correct_letter?(guess)
-    secret_word.split('').include?(guess)
   end
 end
