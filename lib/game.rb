@@ -58,7 +58,17 @@ class Game
   def select_word
     @secret_word = dictionary.valid_words.sample
   end
-  
+
+  def to_yaml
+    YAML.dump({
+                secret_word: @secret_word,
+                guess_count: @guess_count,
+                dictionary: @dictionary,
+                incorrect_guesses: @incorrect_guesses,
+                guess_word: @guess_word
+              })
+  end
+
   private
 
   def guess_word

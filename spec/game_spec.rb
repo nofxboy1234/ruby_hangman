@@ -133,4 +133,11 @@ RSpec.describe Game do
     end
   end
 
+  describe '#to_yaml' do
+    it 'sends dump message to YAML' do
+      expect(YAML).to receive(:dump)
+
+      game_normal.to_yaml
+    end
+  end
 end
