@@ -70,8 +70,14 @@ class Game
   end
 
   def write_yaml_to_file
-    File.open('save_file', 'w') do |somefile|
-      somefile.write(to_yaml)
+    File.open('save_file', 'w') do |file|
+      file.write(to_yaml)
+    end
+  end
+
+  def self.read_yaml_from_file
+    File.open('save_file', 'r') do |file|
+      file.read(to_yaml)
     end
   end
 
