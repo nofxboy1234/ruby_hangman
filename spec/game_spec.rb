@@ -149,7 +149,7 @@ RSpec.describe Game do
     end
   end
 
-  describe '#read_yaml_from_file' do
+  describe '.read_yaml_from_file' do
     it 'read the yaml string from a file' do
       expect(File).to receive(:open)
 
