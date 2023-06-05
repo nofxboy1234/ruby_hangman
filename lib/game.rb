@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'display'
-require_relative 'dictionary'
 require 'yaml'
 
 require 'pry-byebug'
@@ -9,7 +8,13 @@ require 'pry-byebug'
 # The Game class represents a game in Hangman
 class Game
   include Display
-  attr_reader :dictionary, :secret_word, :incorrect_guesses, :guess_count
+  attr_reader :secret_word, :guess_count
+
+  private
+
+  attr_reader :dictionary, :incorrect_guesses
+
+  public
 
   def initialize(dictionary)
     @guess_count = 7
@@ -20,36 +25,7 @@ class Game
   def over?
     secret_word_guessed? || no_more_guesses_left?
   end
-
-  def player_turn
-    display_info
-
-    puts "\nYou have #{guess_count} incorrect guesses left"
-    puts 'Enter your guess (a single letter)'
-    guess = gets.strip.chomp.downcase
-
-    update_state(guess)
-  end
-
-  def set_up
-    dictionary.load_text_file
-    select_word
-  end
-
-  def play
-    set_up
-    player_turn until over?
-    display_info
-    puts "\nThe secret word was '#{secret_word}'"
-    end_message
-  end
-
-  def guess_word
-    @guess_word ||= Array.new(secret_word.length, '_')
-  end
-
-  private
-
+  
   def update_state(guess)
     if correct_letter?(guess)
       update_guess_word(guess)
@@ -57,6 +33,16 @@ class Game
       update_incorrect_guesses(guess)
       decrement_guesses
     end
+  end
+  
+  def select_word
+    @secret_word = dictionary.valid_words.sample
+  end
+  
+  private
+
+  def guess_word
+    @guess_word ||= Array.new(secret_word.length, '_')
   end
 
   def secret_word_guessed?
@@ -70,7 +56,7 @@ class Game
   def update_incorrect_guesses(guess)
     incorrect_guesses << guess
   end
-  
+
   def decrement_guesses
     @guess_count -= 1
   end
@@ -85,9 +71,5 @@ class Game
 
   def correct_letter?(guess)
     secret_word.split('').include?(guess)
-  end
-
-  def select_word
-    @secret_word = dictionary.valid_words.sample
   end
 end
