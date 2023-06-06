@@ -66,27 +66,29 @@ class Game
   end
 
   def self.load
-    YAML.load(read_yaml_from_file)
+    YAML.safe_load(read_yaml_from_file)
   end
 
   def self.read_yaml_from_file
     File.open('save_file', 'r') do |file|
-      file.read(to_yaml)
+      file.read
     end
   end
 
-  private_class_method :read_yaml_from_file
+  def to_yaml
+    YAML.dump(data_to_save)
+  end
 
   private
 
-  def to_yaml
-    YAML.dump({
-                secret_word: @secret_word,
-                guess_count: @guess_count,
-                dictionary: @dictionary,
-                incorrect_guesses: @incorrect_guesses,
-                guess_word: @guess_word
-              })
+  def data_to_save
+    {
+      secret_word: secret_word,
+      guess_count: guess_count,
+      dictionary: dictionary,
+      incorrect_guesses: incorrect_guesses,
+      guess_word: guess_word
+    }
   end
 
   def guess_word

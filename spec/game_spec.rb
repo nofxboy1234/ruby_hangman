@@ -133,37 +133,35 @@ RSpec.describe Game do
     end
   end
 
-  # describe '#to_yaml' do
-  #   it 'sends dump message to YAML' do
-  #     expect(YAML).to receive(:dump)
-
-  #     game_normal.to_yaml
-  #   end
-  # end
-
   describe '#save' do
     it 'writes the yaml string to a file' do
-      allow(game_normal).to receive(:to_yaml)
-
       expect(File).to receive(:open).with('save_file', 'w')
       game_normal.save
     end
   end
 
-  # describe '.read_yaml_from_file' do
-  #   it 'read the yaml string from a file' do
-  #     expect(File).to receive(:open)
-
-  #     Game.read_yaml_from_file
-  #   end
-  # end
-
   describe '.load' do
-    it 'sends load message to YAML' do
+    it 'loads the yaml string from a file into an object' do
       allow(Game).to receive(:read_yaml_from_file)
 
-      expect(YAML).to receive(:load)
+      expect(YAML).to receive(:safe_load)
       Game.load
+    end
+  end
+
+  describe '.read_yaml_from_file' do
+    it 'reads the yaml string from a file' do
+      expect(File).to receive(:open).with('save_file', 'r')
+      Game.read_yaml_from_file
+    end
+  end
+
+  describe '#to_yaml' do
+    it 'converts object to yaml string' do
+      allow(game_normal).to receive(:data_to_save)
+
+      expect(YAML).to receive(:dump)
+      game_normal.to_yaml
     end
   end
 end
