@@ -1,8 +1,8 @@
 require './lib/game'
 
 RSpec.describe Game do
-  subject(:game_normal) { described_class.new(dictionary_google) }
-  let(:dictionary_google) { double('dictionary', valid_words: ['kittens']) }
+  subject(:game_normal) { described_class.new(dictionary) }
+  let(:dictionary) { double('dictionary', valid_words: ['kittens']) }
   let(:secret) { 'kneel' }
 
   describe '#over?' do
@@ -159,7 +159,7 @@ RSpec.describe Game do
   describe '#to_yaml' do
     let(:secret_word) { 'kittens' }
     let(:guess_count) { 5 }
-    let(:dictionary) { dictionary_google }
+    # let(:dictionary) { dictionary }
     let(:incorrect_guesses) { %w[x y] }
     let(:guess_word) { %w[k _ t t _ _ s] }
 
