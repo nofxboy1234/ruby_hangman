@@ -25,10 +25,14 @@ def display_progress
   puts "\nYou have #{game.guess_count} incorrect guesses left"  
 end
 
+def save_game
+  game.save
+end
+
 def player_turn
   display_progress
 
-  prompt_for_save
+  save_game if prompt_for_save == 'y'
   system 'clear'
   
   display_progress
