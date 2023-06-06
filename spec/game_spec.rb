@@ -157,10 +157,31 @@ RSpec.describe Game do
   end
 
   describe '#to_yaml' do
-    it 'converts object to yaml string' do
-      allow(game_normal).to receive(:data_to_save)
+    let(:secret_word) { 'kittens' }
+    let(:guess_count) { 5 }
+    let(:dictionary) { dictionary_google }
+    let(:incorrect_guesses) { %w[x y] }
+    let(:guess_word) { %w[k _ t t _ _ s] }
 
-      expect(YAML).to receive(:dump)
+    let(:data_to_save) do
+      {
+        secret_word: secret_word,
+        guess_count: guess_count,
+        dictionary: dictionary,
+        incorrect_guesses: incorrect_guesses,
+        guess_word: guess_word
+      }
+    end
+
+    it 'converts object to yaml string' do
+
+      allow(game_normal).to receive(:secret_word).and_return(secret_word)
+      allow(game_normal).to receive(:guess_count).and_return(guess_count)
+      allow(game_normal).to receive(:dictionary).and_return(dictionary)
+      allow(game_normal).to receive(:incorrect_guesses).and_return(incorrect_guesses)
+      allow(game_normal).to receive(:guess_word).and_return(guess_word)
+
+      expect(YAML).to receive(:dump).with(data_to_save)
       game_normal.to_yaml
     end
   end
