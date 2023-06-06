@@ -138,7 +138,7 @@ RSpec.describe Game do
       end
 
       it 'writes the yaml string to a file' do
-        expect(File).to receive(:open).with('save_file.yaml', 'w').exactly(1).time
+        expect(File).to receive(:open).with('save/save_file.yaml', 'w').exactly(1).time
         game_normal.save
       end
     end
@@ -160,7 +160,7 @@ RSpec.describe Game do
       end
 
       it 'writes the yaml string to a file' do
-        expect(File).to receive(:open).with('save_file.yaml', 'w').exactly(1).time
+        expect(File).to receive(:open).with('save/save_file.yaml', 'w').exactly(1).time
         game_normal.save
       end
     end
@@ -234,7 +234,7 @@ RSpec.describe Game do
       end
       
       it 'reads the yaml string from a file' do
-        expect(File).to receive(:open).with('save_file.yaml', 'r')
+        expect(File).to receive(:open).with('save/save_file.yaml', 'r')
         Game.read_yaml_from_file
       end
 

@@ -1,5 +1,5 @@
 ---
-:secret_word: birth
+:secret_word: exists
 :guess_count: 7
 :dictionary: !ruby/object:Dictionary
   text_file: google-10000-english-no-swears.txt
@@ -9900,6 +9900,7 @@
   - poison
 :incorrect_guesses: []
 :guess_word:
+- _
 - _
 - _
 - _
