@@ -3,15 +3,17 @@ require './lib/game'
 RSpec.describe Game do
   subject(:game_normal) { described_class.new(dictionary) }
   let(:dictionary) { double('dictionary', valid_words: ['kittens']) }
-  let(:secret) { 'kneel' }
+  # let(:secret) { 'kneel' }
+  let(:secret_word) { 'kittens' }
 
   describe '#over?' do
     context 'when player guesses the secret word and there are guesses left' do
-      let(:guess_word_new) { %w[k n e e l] }
+      # let(:guess_word_new) { %w[k i t t e n s] }
+      let(:guess_word) { %w[k i t t e n s] }
 
       before do
-        allow(game_normal).to receive(:guess_word).and_return(guess_word_new)
-        allow(game_normal).to receive(:secret_word).and_return(secret)
+        allow(game_normal).to receive(:guess_word).and_return(guess_word)
+        allow(game_normal).to receive(:secret_word).and_return(secret_word)
         allow(game_normal).to receive(:guess_count).and_return(1)
       end
 
@@ -21,11 +23,12 @@ RSpec.describe Game do
     end
 
     context 'when player has not guessed the secret word and there are guesses left' do
-      let(:guess_word_new) { %w[k n e e _] }
+      # let(:guess_word_new) { %w[k n e e _] }
+      let(:guess_word) { %w[k _ t t _ _ s] }
 
       before do
-        allow(game_normal).to receive(:guess_word).and_return(guess_word_new)
-        allow(game_normal).to receive(:secret_word).and_return(secret)
+        allow(game_normal).to receive(:guess_word).and_return(guess_word)
+        allow(game_normal).to receive(:secret_word).and_return(secret_word)
         allow(game_normal).to receive(:guess_count).and_return(1)
       end
 
@@ -35,11 +38,12 @@ RSpec.describe Game do
     end
 
     context 'when player has not guessed the secret word and there are no guesses left' do
-      let(:guess_word_new) { %w[k n e e _] }
+      # let(:guess_word_new) { %w[k n e e _] }
+      let(:guess_word) { %w[k _ t t _ _ s] }
 
       before do
-        allow(game_normal).to receive(:guess_word).and_return(guess_word_new)
-        allow(game_normal).to receive(:secret_word).and_return(secret)
+        allow(game_normal).to receive(:guess_word).and_return(guess_word)
+        allow(game_normal).to receive(:secret_word).and_return(secret_word)
         allow(game_normal).to receive(:guess_count).and_return(0)
       end
 
@@ -48,24 +52,25 @@ RSpec.describe Game do
       end
     end
 
-    context 'when player has not guessed the secret word and there are guesses left' do
-      let(:guess_word_new) { %w[k n e e _] }
+    # context 'when player has not guessed the secret word and there are guesses left' do
+    #   # let(:guess_word_new) { %w[k n e e _] }
+    #   let(:guess_word) { %w[k _ t t _ _ s] }
 
-      before do
-        allow(game_normal).to receive(:guess_word).and_return(guess_word_new)
-        allow(game_normal).to receive(:secret_word).and_return(secret)
-        allow(game_normal).to receive(:guess_count).and_return(1)
-      end
+    #   before do
+    #     allow(game_normal).to receive(:guess_word).and_return(guess_word)
+    #     allow(game_normal).to receive(:secret_word).and_return(secret_word)
+    #     allow(game_normal).to receive(:guess_count).and_return(1)
+    #   end
 
-      it 'is game over' do
-        expect(game_normal).not_to be_over
-      end
-    end
+    #   it 'is game over' do
+    #     expect(game_normal).not_to be_over
+    #   end
+    # end
   end
 
   describe '#correct_letter?' do
     before do
-      allow(game_normal).to receive(:secret_word).and_return(secret)
+      allow(game_normal).to receive(:secret_word).and_return(secret_word)
     end
 
     context 'when the guessed letter is a letter inside the secret word' do
@@ -90,21 +95,21 @@ RSpec.describe Game do
       let(:letter) { 'n' }
 
       it 'updates the guess_word array at the indices where the guessed letter is found' do
-        allow(game_normal).to receive(:secret_word).and_return(secret)
+        allow(game_normal).to receive(:secret_word).and_return(secret_word)
         game_normal.update_guess_word(letter)
 
-        expect(game_normal.instance_variable_get(:@guess_word)).to eq(%w[_ n _ _ _])
+        expect(game_normal.instance_variable_get(:@guess_word)).to eq(%w[_ _ _ _ _ n _])
       end
     end
 
     context 'when the guessed letter appears multiple times in the secret word' do
-      let(:letter) { 'e' }
+      let(:letter) { 't' }
 
       it 'updates the guess_word array at the indices where the guessed letter is found' do
-        allow(game_normal).to receive(:secret_word).and_return(secret)
+        allow(game_normal).to receive(:secret_word).and_return(secret_word)
         game_normal.update_guess_word(letter)
 
-        expect(game_normal.instance_variable_get(:@guess_word)).to eq(%w[_ _ e e _])
+        expect(game_normal.instance_variable_get(:@guess_word)).to eq(%w[_ _ t t _ _ _])
       end
     end
   end
@@ -157,7 +162,6 @@ RSpec.describe Game do
   end
 
   describe '#to_yaml' do
-    let(:secret_word) { 'kittens' }
     let(:guess_count) { 5 }
     # let(:dictionary) { dictionary }
     let(:incorrect_guesses) { %w[x y] }
