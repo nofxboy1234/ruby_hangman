@@ -1,6 +1,6 @@
 ---
-:secret_word: packet
-:guess_count: 1
+:secret_word: birth
+:guess_count: 7
 :dictionary: !ruby/object:Dictionary
   text_file: google-10000-english-no-swears.txt
   words:
@@ -9898,17 +9898,10 @@
   - mediawiki
   - configurations
   - poison
-:incorrect_guesses:
-- x
-- ''
-- ''
-- ''
-- ''
-- ''
+:incorrect_guesses: []
 :guess_word:
-- p
-- a
-- c
-- k
+- _
+- _
+- _
 - _
 - _
