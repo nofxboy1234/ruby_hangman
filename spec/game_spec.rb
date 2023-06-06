@@ -155,7 +155,29 @@ RSpec.describe Game do
         expect(Dir).to receive(:mkdir).exactly(1).time
         game_normal.save
       end
-      
+
+      it 'writes the yaml string to a file' do
+        expect(File).to receive(:open).with('save_file', 'w').exactly(1).time
+        game_normal.save
+      end
+    end
+
+    context 'when the save directory exists' do
+      before do
+        allow(Dir).to receive(:exist?).and_return(true)
+        allow(File).to receive(:open)
+      end
+
+      it 'sends message to check existence of save directory' do
+        expect(Dir).to receive(:exist?).with('save').exactly(1).time
+        game_normal.save
+      end
+
+      it 'does not send message to create a directory' do
+        expect(Dir).not_to receive(:mkdir)
+        game_normal.save
+      end
+
       it 'writes the yaml string to a file' do
         expect(File).to receive(:open).with('save_file', 'w').exactly(1).time
         game_normal.save
@@ -196,7 +218,6 @@ RSpec.describe Game do
     end
 
     it 'converts object to yaml string' do
-
       allow(game_normal).to receive(:secret_word).and_return(secret_word)
       allow(game_normal).to receive(:guess_count).and_return(guess_count)
       allow(game_normal).to receive(:dictionary).and_return(dictionary)
