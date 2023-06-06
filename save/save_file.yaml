@@ -1,6 +1,6 @@
 ---
-:secret_word: exists
-:guess_count: 7
+:secret_word: attorneys
+:guess_count: 6
 :dictionary: !ruby/object:Dictionary
   text_file: google-10000-english-no-swears.txt
   words:
@@ -9898,8 +9898,12 @@
   - mediawiki
   - configurations
   - poison
-:incorrect_guesses: []
+:incorrect_guesses:
+- x
 :guess_word:
+- a
+- _
+- _
 - _
 - _
 - _

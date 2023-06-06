@@ -72,6 +72,13 @@ def game_loop
   loop do
     if prompt_for_continue == 'y'
       @game = load_game
+
+      unless @game
+        puts 'No save file found. Starting new game.'
+        sleep(2)
+        @game = Game.new(dictionary)
+        set_up
+      end
     else
       @game = Game.new(dictionary)
       set_up

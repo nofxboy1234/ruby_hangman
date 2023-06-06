@@ -196,40 +196,56 @@ RSpec.describe Game do
   end
 
   describe '.load' do
-    it 'loads the yaml string from a file into an object' do
-      allow(Game).to receive(:read_yaml_from_file)
-      allow(YAML).to receive(:safe_load)
-      allow(dictionary).to receive(:load_text_file)
-      allow(Game).to receive(:new)
+    context 'when there is a save file to load into an object' do
+      before do
+        allow(Game).to receive(:read_yaml_from_file).and_return('a yaml string')
+        allow(YAML).to receive(:safe_load)
+        allow(dictionary).to receive(:load_text_file)
+        allow(Game).to receive(:new)  
+      end
 
-      expect(YAML).to receive(:safe_load)
-      Game.load(dictionary)
+      it 'sends safe_load message to YAML' do
+        expect(YAML).to receive(:safe_load)
+        Game.load(dictionary)
+      end
+  
+      it 'sends load_text_file message to dictionary' do
+        expect(dictionary).to receive(:load_text_file)
+        Game.load(dictionary)
+      end
+  
+      it 'sends new message to Game' do
+        expect(Game).to receive(:new)
+        Game.load(dictionary)
+      end
     end
 
-    it 'sends load_text_file message to dictionary' do
-      allow(Game).to receive(:read_yaml_from_file)
-      allow(YAML).to receive(:safe_load)
-      allow(dictionary).to receive(:load_text_file)
-      allow(Game).to receive(:new)
+    context 'when there is no save file to load into an object' do
+      before do
+        allow(Game).to receive(:read_yaml_from_file)
+      end
 
-      expect(dictionary).to receive(:load_text_file)
-      Game.load(dictionary)
-    end
-
-    it 'sends new message to Game' do
-      allow(Game).to receive(:read_yaml_from_file)
-      allow(YAML).to receive(:safe_load)
-      allow(dictionary).to receive(:load_text_file)
-      allow(Game).to receive(:new)
-
-      expect(Game).to receive(:new)
-      Game.load(dictionary)
+      it 'does not send safe_load message to YAML' do
+        expect(YAML).not_to receive(:safe_load)
+        Game.load(dictionary)
+      end
+  
+      it 'does not send load_text_file message to dictionary' do
+        expect(dictionary).not_to receive(:load_text_file)
+        Game.load(dictionary)
+      end
+  
+      it 'does not send new message to Game' do
+        expect(Game).not_to receive(:new)
+        Game.load(dictionary)
+      end
     end
   end
 
   describe '.read_yaml_from_file' do
     context 'when the save_file exists' do
       before do
+        allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:open)
       end
       
@@ -247,13 +263,11 @@ RSpec.describe Game do
 
     context 'when the save_file does not exist' do
       before do
-        allow(File).to receive(:open).and_raise(Errno::ENOENT)
-        allow(Game).to receive(:puts).twice
+        allow(File).to receive(:exist?).and_return(false)
       end
       
-      it 'outputs 2 error messages' do
-        expect(Game).to receive(:puts).with('Error while reading save_file.yaml.')
-        expect(Game).to receive(:puts).with(Errno::ENOENT)
+      it 'does not send open message to File' do
+        expect(File).not_to receive(:open)
         Game.read_yaml_from_file
       end
     end

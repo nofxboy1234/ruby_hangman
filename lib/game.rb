@@ -73,16 +73,16 @@ class Game
   end
 
   def self.load(dictionary)
-    loaded_data = YAML.safe_load(read_yaml_from_file, permitted_classes: [Symbol, Dictionary])
+    yaml_string = read_yaml_from_file
+    return unless yaml_string
+
+    loaded_data = YAML.safe_load(yaml_string, permitted_classes: [Symbol, Dictionary])
     dictionary.load_text_file
     new(dictionary, loaded_data)
   end
 
   def self.read_yaml_from_file
-    File.open('save/save_file.yaml', 'r', &:read)
-  rescue StandardError => e
-    puts 'Error while reading save_file.yaml.'
-    puts e
+    File.open('save/save_file.yaml', 'r', &:read) if File.exist? 'save/save_file.yaml'
   end
 
   def to_yaml
