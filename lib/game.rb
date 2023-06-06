@@ -16,10 +16,27 @@ class Game
 
   public
 
-  def initialize(dictionary)
+  def initialize(dictionary, loaded_data = nil)
     @guess_count = 7
     @incorrect_guesses = []
     @dictionary = dictionary
+
+    load_data(loaded_data) if loaded_data
+  end
+
+  def load_data(loaded_data)
+      # {
+      #   secret_word: secret_word,
+      #   guess_count: guess_count,
+      #   dictionary: dictionary,
+      #   incorrect_guesses: incorrect_guesses,
+      #   guess_word: guess_word
+      # }
+      @secret_word = loaded_data[:secret_word]
+      @guess_count = loaded_data[:guess_count]
+      @dictionary = loaded_data[:dictionary]
+      @incorrect_guesses = loaded_data[:incorrect_guesses]
+      @guess_word = loaded_data[:guess_word]
   end
 
   def over?
@@ -69,8 +86,10 @@ class Game
     puts e
   end
 
-  def self.load
-    YAML.safe_load(read_yaml_from_file)
+  def self.load(dictionary)
+    loaded_data = YAML.safe_load(read_yaml_from_file, permitted_classes: [Symbol, Dictionary])
+    dictionary.load_text_file
+    self.new(dictionary, loaded_data)
   end
 
   def self.read_yaml_from_file

@@ -20,6 +20,11 @@ def prompt_for_save
   gets.strip.chomp.downcase
 end
 
+def prompt_for_continue
+  puts "Continue saved game? (y = yes / any other character = no)"
+  gets.strip.chomp.downcase
+end
+
 def display_progress
   game.display_info
   puts "\nYou have #{game.guess_count} incorrect guesses left"  
@@ -27,6 +32,10 @@ end
 
 def save_game
   game.save
+end
+
+def load_game
+  Game.load(dictionary)
 end
 
 def player_turn
@@ -49,7 +58,6 @@ def set_up
 end
 
 def play
-  set_up
   player_turn until game.over?
   game.display_info
   puts "\nThe secret word was '#{game.secret_word}'"
@@ -62,7 +70,13 @@ end
 
 def game_loop
   loop do
-    @game = Game.new(dictionary)
+    if prompt_for_continue == 'y'
+      @game = load_game
+    else
+      @game = Game.new(dictionary)
+      set_up
+    end
+
     play
 
     play_again = prompt_for_play_again

@@ -1,6 +1,6 @@
 ---
-:secret_word: pushed
-:guess_count: 7
+:secret_word: packet
+:guess_count: 1
 :dictionary: !ruby/object:Dictionary
   text_file: google-10000-english-no-swears.txt
   words:
@@ -9898,11 +9898,17 @@
   - mediawiki
   - configurations
   - poison
-:incorrect_guesses: []
+:incorrect_guesses:
+- x
+- ''
+- ''
+- ''
+- ''
+- ''
 :guess_word:
-- p
-- u
-- s
-- h
-- e
+- _
+- _
+- _
+- _
+- _
 - _
