@@ -4,8 +4,6 @@ require_relative 'display'
 require_relative 'dictionary'
 require 'yaml'
 
-require 'pry-byebug'
-
 # The Game class represents a game in Hangman
 class Game
   include Display

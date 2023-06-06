@@ -3,8 +3,6 @@
 require_relative 'game'
 require_relative 'dictionary'
 
-require 'pry-byebug'
-
 def prompt_for_play_again
   puts 'Play again? (y = yes / any other character = no)'
   gets.strip.chomp.downcase
