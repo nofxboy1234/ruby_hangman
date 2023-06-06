@@ -139,9 +139,27 @@ RSpec.describe Game do
   end
 
   describe '#save' do
-    it 'writes the yaml string to a file' do
-      expect(File).to receive(:open).with('save_file', 'w')
-      game_normal.save
+    context 'when the save directory does not exist' do
+      before do
+        allow(Dir).to receive(:exist?).and_return(false)
+        allow(Dir).to receive(:mkdir)
+        allow(File).to receive(:open)
+      end
+
+      it 'sends message to check existence of save directory' do
+        expect(Dir).to receive(:exist?).with('save').exactly(1).time
+        game_normal.save
+      end
+
+      it 'sends message to create a directory' do
+        expect(Dir).to receive(:mkdir).exactly(1).time
+        game_normal.save
+      end
+      
+      it 'writes the yaml string to a file' do
+        expect(File).to receive(:open).with('save_file', 'w').exactly(1).time
+        game_normal.save
+      end
     end
   end
 

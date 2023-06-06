@@ -60,6 +60,7 @@ class Game
   end
 
   def save
+    Dir.mkdir 'save' unless Dir.exist? 'save'
     File.open('save_file', 'w') do |file|
       file.write(to_yaml)
     end
