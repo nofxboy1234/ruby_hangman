@@ -224,15 +224,39 @@ RSpec.describe Game do
   end
 
   describe '.read_yaml_from_file' do
-    it 'reads the yaml string from a file' do
-      expect(File).to receive(:open).with('save_file', 'r')
-      Game.read_yaml_from_file
+    context 'when the save_file exists' do
+      before do
+        allow(File).to receive(:open)
+      end
+      
+      it 'reads the yaml string from a file' do
+        expect(File).to receive(:open).with('save_file', 'r')
+        Game.read_yaml_from_file
+      end
+
+      it 'does not output 2 error messages' do
+        expect(Game).not_to receive(:puts).with('Error while reading save_file.')
+        expect(Game).not_to receive(:puts).with(Errno::ENOENT)
+        Game.read_yaml_from_file
+      end
+    end
+
+    context 'when the save_file does not exist' do
+      before do
+        allow(File).to receive(:open).and_raise(Errno::ENOENT)
+        allow(Game).to receive(:puts).twice
+      end
+      
+      it 'outputs 2 error messages' do
+        expect(Game).to receive(:puts).with('Error while reading save_file.')
+        expect(Game).to receive(:puts).with(Errno::ENOENT)
+        Game.read_yaml_from_file
+      end
     end
   end
 
   describe '#to_yaml' do
     let(:guess_count) { 5 }
-    # let(:dictionary) { dictionary }
     let(:incorrect_guesses) { %w[x y] }
     let(:guess_word) { %w[k _ t t _ _ s] }
 

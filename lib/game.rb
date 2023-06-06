@@ -65,7 +65,7 @@ class Game
       file.write(to_yaml)
     end
   rescue StandardError => e
-    puts "Error while writing to file save_file."
+    puts 'Error while writing to file save_file.'
     puts e
   end
 
@@ -77,6 +77,10 @@ class Game
     File.open('save_file', 'r') do |file|
       file.read
     end
+  rescue StandardError => e
+    # binding.pry
+    puts 'Error while reading save_file.'
+    puts e
   end
 
   def to_yaml
