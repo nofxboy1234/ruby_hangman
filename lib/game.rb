@@ -64,6 +64,9 @@ class Game
     File.open('save_file', 'w') do |file|
       file.write(to_yaml)
     end
+  rescue StandardError => e
+    puts "Error while writing to file save_file."
+    puts e
   end
 
   def self.load

@@ -183,6 +183,35 @@ RSpec.describe Game do
         game_normal.save
       end
     end
+
+    context 'when file is saved successfully' do
+      before do
+        allow(Dir).to receive(:exist?).and_return(false)
+        allow(Dir).to receive(:mkdir)
+        allow(File).to receive(:open)
+      end
+
+      it 'does not output two error messages' do
+        expect(game_normal).not_to receive(:puts).with('Error while writing to file save_file.')
+        expect(game_normal).not_to receive(:puts).with(Errno::ENOENT)
+        game_normal.save
+      end
+    end
+
+    context 'when rescuing an error' do
+      before do
+        allow(Dir).to receive(:exist?).and_return(false)
+        allow(Dir).to receive(:mkdir)
+        allow(File).to receive(:open).and_raise(Errno::ENOENT)
+        allow(game_normal).to receive(:puts).twice
+      end
+
+      it 'outputs two error messages' do
+        expect(game_normal).to receive(:puts).with('Error while writing to file save_file.')
+        expect(game_normal).to receive(:puts).with(Errno::ENOENT)
+        game_normal.save
+      end
+    end
   end
 
   describe '.load' do
