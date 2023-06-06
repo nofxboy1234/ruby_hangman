@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'display'
+require_relative 'dictionary'
 require 'yaml'
 
 require 'pry-byebug'
@@ -22,21 +23,6 @@ class Game
     @dictionary = dictionary
 
     load_data(loaded_data) if loaded_data
-  end
-
-  def load_data(loaded_data)
-      # {
-      #   secret_word: secret_word,
-      #   guess_count: guess_count,
-      #   dictionary: dictionary,
-      #   incorrect_guesses: incorrect_guesses,
-      #   guess_word: guess_word
-      # }
-      @secret_word = loaded_data[:secret_word]
-      @guess_count = loaded_data[:guess_count]
-      @dictionary = loaded_data[:dictionary]
-      @incorrect_guesses = loaded_data[:incorrect_guesses]
-      @guess_word = loaded_data[:guess_word]
   end
 
   def over?
@@ -128,5 +114,13 @@ class Game
 
   def no_more_guesses_left?
     guess_count.zero?
+  end
+
+  def load_data(loaded_data)
+    @secret_word = loaded_data[:secret_word]
+    @guess_count = loaded_data[:guess_count]
+    @dictionary = loaded_data[:dictionary]
+    @incorrect_guesses = loaded_data[:incorrect_guesses]
+    @guess_word = loaded_data[:guess_word]
   end
 end

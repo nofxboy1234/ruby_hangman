@@ -3,7 +3,6 @@ require './lib/game'
 RSpec.describe Game do
   subject(:game_normal) { described_class.new(dictionary) }
   let(:dictionary) { double('dictionary', valid_words: ['kittens']) }
-  # let(:secret) { 'kneel' }
   let(:secret_word) { 'kittens' }
 
   describe '#over?' do
@@ -217,9 +216,32 @@ RSpec.describe Game do
   describe '.load' do
     it 'loads the yaml string from a file into an object' do
       allow(Game).to receive(:read_yaml_from_file)
+      allow(YAML).to receive(:safe_load)
+      allow(dictionary).to receive(:load_text_file)
+      allow(Game).to receive(:new)
 
       expect(YAML).to receive(:safe_load)
-      Game.load
+      Game.load(dictionary)
+    end
+
+    it 'sends load_text_file message to dictionary' do
+      allow(Game).to receive(:read_yaml_from_file)
+      allow(YAML).to receive(:safe_load)
+      allow(dictionary).to receive(:load_text_file)
+      allow(Game).to receive(:new)
+
+      expect(dictionary).to receive(:load_text_file)
+      Game.load(dictionary)
+    end
+
+    it 'sends new message to Game' do
+      allow(Game).to receive(:read_yaml_from_file)
+      allow(YAML).to receive(:safe_load)
+      allow(dictionary).to receive(:load_text_file)
+      allow(Game).to receive(:new)
+
+      expect(Game).to receive(:new)
+      Game.load(dictionary)
     end
   end
 
