@@ -16,18 +16,18 @@ def dictionary
 end
 
 def prompt_for_save
-  puts "Save your progress? (y = yes / any other character = no)"
+  puts 'Save your progress? (y = yes / any other character = no)'
   gets.strip.chomp.downcase
 end
 
 def prompt_for_continue
-  puts "Continue saved game? (y = yes / any other character = no)"
+  puts 'Continue saved game? (y = yes / any other character = no)'
   gets.strip.chomp.downcase
 end
 
 def display_progress
   game.display_info
-  puts "\nYou have #{game.guess_count} incorrect guesses left"  
+  puts "\nYou have #{game.guess_count} incorrect guesses left"
 end
 
 def save_game
@@ -43,12 +43,12 @@ def player_turn
 
   save_game if prompt_for_save == 'y'
   system 'clear'
-  
+
   display_progress
 
   puts 'Enter your guess (a single letter)'
   guess = gets.strip.chomp.downcase
-  
+
   game.update_state(guess)
 end
 
