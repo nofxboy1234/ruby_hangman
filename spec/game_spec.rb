@@ -7,7 +7,6 @@ RSpec.describe Game do
 
   describe '#over?' do
     context 'when player guesses the secret word and there are guesses left' do
-      # let(:guess_word_new) { %w[k i t t e n s] }
       let(:guess_word) { %w[k i t t e n s] }
 
       before do
@@ -22,7 +21,6 @@ RSpec.describe Game do
     end
 
     context 'when player has not guessed the secret word and there are guesses left' do
-      # let(:guess_word_new) { %w[k n e e _] }
       let(:guess_word) { %w[k _ t t _ _ s] }
 
       before do
@@ -37,7 +35,6 @@ RSpec.describe Game do
     end
 
     context 'when player has not guessed the secret word and there are no guesses left' do
-      # let(:guess_word_new) { %w[k n e e _] }
       let(:guess_word) { %w[k _ t t _ _ s] }
 
       before do
@@ -50,21 +47,6 @@ RSpec.describe Game do
         expect(game_normal).to be_over
       end
     end
-
-    # context 'when player has not guessed the secret word and there are guesses left' do
-    #   # let(:guess_word_new) { %w[k n e e _] }
-    #   let(:guess_word) { %w[k _ t t _ _ s] }
-
-    #   before do
-    #     allow(game_normal).to receive(:guess_word).and_return(guess_word)
-    #     allow(game_normal).to receive(:secret_word).and_return(secret_word)
-    #     allow(game_normal).to receive(:guess_count).and_return(1)
-    #   end
-
-    #   it 'is game over' do
-    #     expect(game_normal).not_to be_over
-    #   end
-    # end
   end
 
   describe '#correct_letter?' do

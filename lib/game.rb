@@ -80,11 +80,7 @@ class Game
 
   def self.read_yaml_from_file
     File.open('save_file', 'r', &:read)
-    # File.open('save_file', 'r') do |file|
-    #   file.read
-    # end
   rescue StandardError => e
-    # binding.pry
     puts 'Error while reading save_file.'
     puts e
   end
