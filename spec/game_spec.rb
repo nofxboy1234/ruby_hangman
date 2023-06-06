@@ -138,7 +138,7 @@ RSpec.describe Game do
       end
 
       it 'writes the yaml string to a file' do
-        expect(File).to receive(:open).with('save_file', 'w').exactly(1).time
+        expect(File).to receive(:open).with('save_file.yaml', 'w').exactly(1).time
         game_normal.save
       end
     end
@@ -160,7 +160,7 @@ RSpec.describe Game do
       end
 
       it 'writes the yaml string to a file' do
-        expect(File).to receive(:open).with('save_file', 'w').exactly(1).time
+        expect(File).to receive(:open).with('save_file.yaml', 'w').exactly(1).time
         game_normal.save
       end
     end
@@ -173,7 +173,7 @@ RSpec.describe Game do
       end
 
       it 'does not output two error messages' do
-        expect(game_normal).not_to receive(:puts).with('Error while writing to file save_file.')
+        expect(game_normal).not_to receive(:puts).with('Error while writing to file save_file.yaml.')
         expect(game_normal).not_to receive(:puts).with(Errno::ENOENT)
         game_normal.save
       end
@@ -188,7 +188,7 @@ RSpec.describe Game do
       end
 
       it 'outputs two error messages' do
-        expect(game_normal).to receive(:puts).with('Error while writing to file save_file.')
+        expect(game_normal).to receive(:puts).with('Error while writing to file save_file.yaml.')
         expect(game_normal).to receive(:puts).with(Errno::ENOENT)
         game_normal.save
       end
@@ -234,12 +234,12 @@ RSpec.describe Game do
       end
       
       it 'reads the yaml string from a file' do
-        expect(File).to receive(:open).with('save_file', 'r')
+        expect(File).to receive(:open).with('save_file.yaml', 'r')
         Game.read_yaml_from_file
       end
 
       it 'does not output 2 error messages' do
-        expect(Game).not_to receive(:puts).with('Error while reading save_file.')
+        expect(Game).not_to receive(:puts).with('Error while reading save_file.yaml.')
         expect(Game).not_to receive(:puts).with(Errno::ENOENT)
         Game.read_yaml_from_file
       end
@@ -252,7 +252,7 @@ RSpec.describe Game do
       end
       
       it 'outputs 2 error messages' do
-        expect(Game).to receive(:puts).with('Error while reading save_file.')
+        expect(Game).to receive(:puts).with('Error while reading save_file.yaml.')
         expect(Game).to receive(:puts).with(Errno::ENOENT)
         Game.read_yaml_from_file
       end

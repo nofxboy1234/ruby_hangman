@@ -64,11 +64,11 @@ class Game
 
   def save
     Dir.mkdir 'save' unless Dir.exist? 'save'
-    File.open('save_file', 'w') do |file|
+    File.open('save_file.yaml', 'w') do |file|
       file.write(to_yaml)
     end
   rescue StandardError => e
-    puts 'Error while writing to file save_file.'
+    puts 'Error while writing to file save_file.yaml.'
     puts e
   end
 
@@ -79,9 +79,9 @@ class Game
   end
 
   def self.read_yaml_from_file
-    File.open('save_file', 'r', &:read)
+    File.open('save_file.yaml', 'r', &:read)
   rescue StandardError => e
-    puts 'Error while reading save_file.'
+    puts 'Error while reading save_file.yaml.'
     puts e
   end
 
