@@ -15,13 +15,27 @@ def dictionary
   @dictionary ||= Dictionary.new(text_file)
 end
 
-def player_turn
-  game.display_info
+def prompt_for_save
+  puts "Save your progress? (y = yes / any other character = no)"
+  gets.strip.chomp.downcase
+end
 
-  puts "\nYou have #{game.guess_count} incorrect guesses left"
+def display_progress
+  game.display_info
+  puts "\nYou have #{game.guess_count} incorrect guesses left"  
+end
+
+def player_turn
+  display_progress
+
+  prompt_for_save
+  system 'clear'
+  
+  display_progress
+
   puts 'Enter your guess (a single letter)'
   guess = gets.strip.chomp.downcase
-
+  
   game.update_state(guess)
 end
 
